@@ -1,9 +1,10 @@
-<% include layout %>
+<% include documentHead %>
+<!-- First excersize, usage of helpers and includes, read parameters -->
   <h1><%= title %></h1>
   <p>Welcome to <%= title %></p>
   <%- link_to('hello world', '/something/here') %>
   <%- img_tag('images/content/sample_1.jpg', {alt:'some alt text', width:'100'}) %>
   <%- img_tag('images/content/sample_2.jpg', {alt:'some alt text', width:'100'}) %>
   <%- img_tag('images/content/sample_3.jpg', {alt:'some alt text', width:'100'}) %>
-  
-  <%- select_tag('mySelectTag', options) %>
+  <%- select_tag('mySelectElement', options) %>
+<% include documentFoot %>

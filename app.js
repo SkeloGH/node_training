@@ -1,23 +1,23 @@
-
+console.log('\n =============== \n');
 /**
  * Module dependencies.
  */
 
 var express = require('express');
-var helpers = require('express-helpers');
+
 var routes = require('./routes');
+var user = require('./routes/user');
 var reload = require('reload');
 var ejs  = require('ejs');
 
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var app = express();
-var createServer;
+var helpers = require('express-helpers');
+var createServer, currentEnvironment;
 
 // enable helpers
 helpers(app);
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -30,14 +30,37 @@ app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+currentEnvironment = app.get('env');
+
 // development only
-if ('development' == app.get('env')) {
+if (currentEnvironment == 'development') {
   app.use(express.errorHandler());
 }
 
+// render scripts
+app.locals({
+    scripts: [],
+  renderScriptsTags: function (all) {
+    app.locals.scripts = [];
+    if (all != undefined) {
+      return all.map(function(script) {
+        return '<script src="/javascripts/' + script + '"></script>';
+      }).join('\n ');
+    }
+    else {
+      return '';
+    }
+  },
+  getScripts: function(req, res) {
+    return scripts;
+  }
+});
+
+// views
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/about', routes.about);
+app.get('/poll/:id', routes.poll);
+app.get('/create/:id', routes.create);
 
 createServer = http.createServer(app);
 

@@ -1,0 +1,10 @@
+<% include documentHead %>
+<!-- second excersize, call a js file and create a route -->
+<% 
+  scripts = ['/javascripts/poll_package.js'];
+%>
+  <h1>Gracias por acceder <%= userName %></h1>
+  <p>El siguiente formulario sólo lo podrás llenar <strong>UNA</strong> vez, y habiendo concluído se destruirá automaticamente por lo que es importante que lo contestes con la mayor honestidad posible sin recargar la página, no te pediremos información personal como teléfono, nombre o dirección, siendo opcional el correo electrónico, el contenido de la siguiente encuesta está restringido para personas <strong>mayores de edad</strong>, al hacer click en el botón 'Continuar' aceptas las condiciones de uso.</p>
+  <input type="button" name="accept-terms"  class="accept-terms" value="Continuar">
+  <%- renderScriptsTags(scripts) %>
+<% include documentFoot %>

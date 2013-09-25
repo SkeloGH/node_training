@@ -8,8 +8,8 @@ var getParamNames = function(params){
   return paramNames;
 };
 var fillOptions = function(params){
-  var options = [];
-  var paramNames = getParamNames(params),
+  var options = [],
+    paramNames = getParamNames(params),
     paramsLength = paramNames.length,
     optionValuePrefix = Math.abs(Math.random().toString().indexOf(1));
   
@@ -21,7 +21,6 @@ var fillOptions = function(params){
     };
   }
   if (!options.length) {
-    console.log(optionValuePrefix);
     options = [{
       value:'default',
       text:'default',
@@ -32,13 +31,18 @@ var fillOptions = function(params){
 };
 
 /*
- * GET home page.
- */
+  GET home page.
+*/
 exports.index = function(req, res){
   options = fillOptions(req.query);
   res.render('index', { title: 'Express', options: options });
 };
-exports.about = function(req, res){
+exports.poll = function(req, res){
+  var userName = req.params.id;
   options = fillOptions(req.query);
-  res.render('about', { title: 'Express about', options: options });
+  res.render('poll', { userName: userName, options: options });
+};
+exports.create = function(req, res){
+  var options = req.query.u? req.query : {u:''};
+  res.render('create', options);
 };
