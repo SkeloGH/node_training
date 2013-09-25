@@ -1,0 +1,10 @@
+<% include layout %> 
+<% 
+  var testVar = '<div>test var inside a div</div>';
+%>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <% console.log(options) %>
+  <%- select_tag('mySelectElement', options) %>
+
+  <%- js_tag('/javascripts/about_package.js') %>
