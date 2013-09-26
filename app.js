@@ -2,7 +2,8 @@ console.log('\n =============== \n');
 /**
  * Module dependencies.
  */
-
+var fs = require('fs');
+var Ne = require('neon');
 var express = require('express');
 
 var routes = require('./routes');
@@ -36,7 +37,21 @@ currentEnvironment = app.get('env');
 if (currentEnvironment == 'development') {
   app.use(express.errorHandler());
 }
+Ne.Class('Skelo')({
+    class_var : 'xxx',
+    prototype : {
+        instance_var : 'yyy',
+        init : function (options){
 
+            this.bindEvents();
+            
+            return true;
+        },
+        bindEvents : function(){
+          console.log('bindEvents');
+        }
+    }
+});
 // render scripts
 app.locals({
     scripts: [],
@@ -59,8 +74,12 @@ app.locals({
 // views
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/poll/:id', routes.poll);
 app.get('/create/:id', routes.create);
+// app.get('/poll/:id', routes.poll);
+app.get('/poll/:id', function(req, res){
+  // res.sendfile(req);
+  // console.log('>>>>>>>>>>>>>>>>', fs);
+});
 
 createServer = http.createServer(app);
 
